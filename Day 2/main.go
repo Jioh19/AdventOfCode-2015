@@ -27,6 +27,10 @@ func main() {
 	part1 := part1(data)
 	fmt.Println("Part 1:", part1)
 	fmt.Println("Time in nanoseconds:", time.Since(s).Nanoseconds())
+	s = time.Now()
+	part2 := part2(data)
+	fmt.Println("Part 2:", part2)
+	fmt.Println("Time in nanoseconds:", time.Since(s).Nanoseconds())
 }
 
 func insertData(file []byte) []Rect {
@@ -56,6 +60,32 @@ func part1(data []Rect) int {
 		min := math.Min(float64(area1), float64(area2))
 		min = math.Min(min, float64(area3))
 		result += int(min)
+	}
+	return result
+}
+
+func part2(data []Rect) int {
+	result := 0
+	for _, rect := range data {
+		len1, len2 := 0, 0
+		if rect.length < rect.width {
+			len1 = rect.length
+			if rect.width < rect.height {
+				len2 = rect.width
+			} else {
+				len2 = rect.height
+			}
+		} else {
+			len1 = rect.width
+			if rect.length < rect.height {
+				len2 = rect.length
+			} else {
+				len2 = rect.height
+			}
+		}
+
+		result += 2 * (len1 + len2)
+		result += rect.width * rect.height * rect.length
 	}
 	return result
 }
