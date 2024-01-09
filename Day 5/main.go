@@ -23,7 +23,7 @@ func main() {
 	s2 := time.Now()
 	part2 := part2(input)
 	fmt.Println("Part 2:", part2)
-	fmt.Println("Time in milliseconds:", time.Since(s2).Milliseconds())
+	fmt.Println("Time in nanoseconds:", time.Since(s2).Nanoseconds())
 }
 
 func insertData(file []byte) [][]byte {
