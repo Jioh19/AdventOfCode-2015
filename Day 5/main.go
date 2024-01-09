@@ -17,15 +17,12 @@ func main() {
 	input := insertData(file)
 
 	s := time.Now()
-	part1 := check(input)
+	part1 := part1(input)
 	fmt.Println("Part 1:", part1)
-	fmt.Println("Time in milliseconds:", time.Since(s).Milliseconds())
+	fmt.Println("Time in nanoseconds:", time.Since(s).Nanoseconds())
 	s2 := time.Now()
-	//part2 := input
-	// for _, line := range input {
-	// 	fmt.Println(string(line), checkContain(line), checkTwin(line))
-	// }
-	//fmt.Println("Part 2:", part2)
+	part2 := part2(input)
+	fmt.Println("Part 2:", part2)
 	fmt.Println("Time in milliseconds:", time.Since(s2).Milliseconds())
 }
 
@@ -72,10 +69,39 @@ func checkContain(line []byte) bool {
 	return true
 }
 
-func check(lines [][]byte) int {
+func part1(lines [][]byte) int {
 	result := 0
 	for _, line := range lines {
 		if checkContain(line) && checkTwin(line) && checkVowel(line) {
+			result++
+		}
+	}
+	return result
+}
+
+func checkSpace(line []byte) bool {
+	for i := 0; i < len(line)-2; i++ {
+		if line[i] == line[i+2] {
+			return true
+		}
+	}
+	return false
+}
+
+func checkPair(line []byte) bool {
+	for i := 0; i < len(line)-3; i++ {
+		pair := []byte{line[i], line[i+1]}
+		if strings.Contains(string(line[i+2:]), string(pair)) {
+			return true
+		}
+	}
+	return false
+}
+
+func part2(lines [][]byte) int {
+	result := 0
+	for _, line := range lines {
+		if checkPair(line) && checkSpace(line) {
 			result++
 		}
 	}
